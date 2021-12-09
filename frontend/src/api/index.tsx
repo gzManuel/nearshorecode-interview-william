@@ -22,7 +22,7 @@ export const getBook = async (slug: string) => {
   }
 };
 
-export const setBook = async (book: BookModel) => {
+export const postBook = async (book: BookModel) => {
   try {
     const response = await axios.post(`${backendDomain}/books`,book.toJson());
     console.log(response);
