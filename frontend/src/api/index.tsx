@@ -11,7 +11,7 @@ export const getBooks = async () => {
   }
 };
 
-export const getBook = async (slug: string) => {
+export const getBook = async (slug?: string) => {
   try {
     const response = await axios.get(`${backendDomain}/books/${slug}`);
     return response.data.data;
