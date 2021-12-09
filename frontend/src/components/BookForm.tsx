@@ -10,6 +10,7 @@ enum FormActionKind {
   UPDATE_AUTHOR = "UPDATE_AUTHOR",
   UPDATE_PUBLISHER = "UPDATE_PUBLISHER",
   UPDATE_SYNOPSIS = "UPDATE_SYNOPSIS",
+  CLEAN_FORM = "CLEAN_FORM",
 }
 
 interface ActionForm {
@@ -17,8 +18,10 @@ interface ActionForm {
   payload: string;
 }
 
-
-const formReducer = (state: BookInterface, action: ActionForm): BookInterface => {
+const formReducer = (
+  state: BookInterface,
+  action: ActionForm
+): BookInterface => {
   const { type, payload } = action;
 
   switch (type) {
@@ -34,31 +37,40 @@ const formReducer = (state: BookInterface, action: ActionForm): BookInterface =>
       return { ...state, publisher: payload };
     case FormActionKind.UPDATE_SYNOPSIS:
       return { ...state, synopsis: payload };
+    case FormActionKind.CLEAN_FORM:
+      return {
+        title: "",
+        author: "",
+        slug: "",
+        isbn: "",
+        publisher: "",
+        synopsis: "",
+      };
   }
 };
 
 const BookForm: React.FC = (props) => {
-
   const [formState, dispatchReducer] = useReducer(formReducer, {
-    title: '',
-    slug: '',
-    isbn: '',
-    author: '',
-    publisher: '',
-    synopsis: ''
+    title: "",
+    slug: "",
+    isbn: "",
+    author: "",
+    publisher: "",
+    synopsis: "",
   });
 
   const onFinish = async () => {
-    const book ={
+    const book = {
       title: formState.title,
       slug: formState.slug,
       isbn: formState.isbn,
       author: formState.author,
       publisher: formState.publisher,
-      synopsis: formState.synopsis
+      synopsis: formState.synopsis,
     };
     const savedBook = await postBook(book);
-    console.log(savedBook);
+    alert(`Succeed saved book ${JSON.stringify(savedBook)}`);
+    dispatchReducer({ type: FormActionKind.CLEAN_FORM, payload: "" });
   };
 
   const onFinishFailed = (errorInfo: any) => {
@@ -87,6 +99,7 @@ const BookForm: React.FC = (props) => {
               payload: event.target.value,
             })
           }
+          value={formState.title}
         />
       </Form.Item>
 
@@ -102,6 +115,7 @@ const BookForm: React.FC = (props) => {
               payload: event.target.value,
             })
           }
+          value={formState.slug}
         />
       </Form.Item>
 
@@ -117,6 +131,7 @@ const BookForm: React.FC = (props) => {
               payload: event.target.value,
             })
           }
+          value={formState.isbn}
         />
       </Form.Item>
 
@@ -132,6 +147,7 @@ const BookForm: React.FC = (props) => {
               payload: event.target.value,
             })
           }
+          value={formState.author}
         />
       </Form.Item>
 
@@ -147,6 +163,7 @@ const BookForm: React.FC = (props) => {
               payload: event.target.value,
             })
           }
+          value={formState.publisher}
         />
       </Form.Item>
       <Form.Item
@@ -161,6 +178,7 @@ const BookForm: React.FC = (props) => {
               payload: event.target.value,
             })
           }
+          value={formState.synopsis}
         />
       </Form.Item>
 

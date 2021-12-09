@@ -4,6 +4,8 @@ import { getBooks } from "../api";
 import BookInterface from "../models/Book";
 import { useNavigate } from "react-router-dom";
 
+import classes from './BookList.module.css'
+
 const BookList: React.FC = (props) => {
   const [books, setBooks] = useState<BookInterface[]>([]);
   const navigate = useNavigate();
@@ -27,6 +29,6 @@ const BookList: React.FC = (props) => {
     </List.Item>
   ));
 
-  return <List>{listBooks}</List>;
+  return <List className={classes.bookList}>{listBooks}</List>;
 };
 export default BookList;
