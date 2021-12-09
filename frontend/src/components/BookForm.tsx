@@ -1,6 +1,6 @@
 import { Form, Input, Button } from "antd";
 import { useReducer } from "react";
-import BookModel from "../models/Book";
+import BookInterface from "../models/Book";
 import { postBook } from "../api";
 
 enum FormActionKind {
@@ -17,16 +17,8 @@ interface ActionForm {
   payload: string;
 }
 
-interface FormState {
-  title: string;
-  slug: string;
-  isbn: string;
-  author: string;
-  publisher: string;
-  synopsis: string;
-}
 
-const formReducer = (state: FormState, action: ActionForm): FormState => {
+const formReducer = (state: BookInterface, action: ActionForm): BookInterface => {
   const { type, payload } = action;
 
   switch (type) {
@@ -47,17 +39,24 @@ const formReducer = (state: FormState, action: ActionForm): FormState => {
 
 const BookForm: React.FC = (props) => {
 
-  const [formState, dispatchReducer] = useReducer(formReducer, new BookModel().toJson());
+  const [formState, dispatchReducer] = useReducer(formReducer, {
+    title: '',
+    slug: '',
+    isbn: '',
+    author: '',
+    publisher: '',
+    synopsis: ''
+  });
 
   const onFinish = async () => {
-    const book = new BookModel(
-      formState.title,
-      formState.slug,
-      formState.isbn,
-      formState.author,
-      formState.publisher,
-      formState.synopsis
-    );
+    const book ={
+      title: formState.title,
+      slug: formState.slug,
+      isbn: formState.isbn,
+      author: formState.author,
+      publisher: formState.publisher,
+      synopsis: formState.synopsis
+    };
     const savedBook = await postBook(book);
     console.log(savedBook);
   };

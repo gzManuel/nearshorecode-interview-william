@@ -1,8 +1,6 @@
 import axios from "axios";
-import BookModel from '../models/Book'
+import BookInterface from '../models/Book'
 const backendDomain = "http://localhost:3333";
-
-
 
 export const getBooks = async () => {
   try {
@@ -22,9 +20,9 @@ export const getBook = async (slug: string) => {
   }
 };
 
-export const postBook = async (book: BookModel) => {
+export const postBook = async (book: BookInterface) => {
   try {
-    const response = await axios.post(`${backendDomain}/books`,book.toJson());
+    const response = await axios.post(`${backendDomain}/books`,book);
     console.log(response);
     return response.data.data;
   } catch (error) {
