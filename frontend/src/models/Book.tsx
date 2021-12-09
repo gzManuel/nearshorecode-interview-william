@@ -1,10 +1,10 @@
 interface Book {
-  title: String;
-  slug: String;
-  isbn: String;
-  author: String;
-  publisher: String;
-  synopsis: String;
+  title: string;
+  slug: string;
+  isbn: string;
+  author: string;
+  publisher: string;
+  synopsis: string;
 }
 
 export default Book;
