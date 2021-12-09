@@ -12,7 +12,8 @@ const database = (persistence = {
         slug: 'una-vida-con-proposito',
         isbn: '234-343-3434',
         author: 'Rick Warrens',
-        publisher: 'Zondervan'
+        publisher: 'Zondervan',
+        synopsis:"Publicado en más de 85 idiomas, Una vida con propósito es mucho más que simplemente un libro; es una guía para una jornada espiritual de 42 días. Una vez que hayas realizado esta jornada, nunca serás el mismo de nuevo."
     }
 }) => {
 
